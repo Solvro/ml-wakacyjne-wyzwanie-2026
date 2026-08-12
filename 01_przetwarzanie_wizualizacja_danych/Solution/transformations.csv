@@ -11,7 +11,7 @@ Ticket,Drop,None,Numeric,None,Potentially useful information but outside the sco
 Fare,Impute,Median by Pclass and Sex,Numeric,Log-transform,Strong relationship with survival
 Cabin,Drop,Missing -> NoCabin,None,None,"Extract HasCabin and Deck"
 Embarked,Impute,Most frequent category,One-hot,None,Shows a relationship with survival and may provide additional information to the model
-----------
+----------,,,,,
 Title,Create,None,One-hot,None,"Shows relationship with survival, extracted from Name, replaced rare titles with 'Rare'"
 FamilySize,Create,None,Numeric,None,"Shows relationship with survival, created from SibSp and Parch"
 HasCabin,Create,None,Binary,None,"Shows relationship with survival, created from Cabin"
