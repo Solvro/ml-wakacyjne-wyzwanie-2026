@@ -4,7 +4,7 @@ Survived,Target,None,Numeric,None,Target variable
 Pclass,Keep,None,Ordinal / numeric,,Strong relationship with survival
 Name,Drop,None,None,None,"Drop name"
 Sex,Keep,None,Binary,None,Strong relationship with survival
-Age,Impute & Convert to Int,Median by Pclass and Sex,Numeric,None,Strong relationship with survival
+Age,Impute,Median by Pclass and Sex,Numeric,None,Strong relationship with survival
 SibSp,Keep,None,Numeric,None,"Shows relationship with survival, used to create FamilySize"
 Parch,Keep,None,Numeric,None,Shows relationship with survival; also used to create FamilySize
 Ticket,Drop,None,Numeric,None,Potentially useful information but outside the scope of this analysis
