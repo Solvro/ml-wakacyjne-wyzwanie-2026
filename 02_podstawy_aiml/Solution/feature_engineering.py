@@ -8,6 +8,7 @@ def engineer_features(df):
         df["Title"].isin(["Mr", "Miss", "Mrs", "Master"]), # keep common titles
         "Rare" # rest are mapped to 'Rare'
     )
+    df = pd.get_dummies(df, columns=["Title"], prefix="Title", dtype=np.int32) # change to one-hot encoding
 
     # drop Name
     df.drop(columns=["Name"], inplace=True)
