@@ -29,6 +29,7 @@ def process_data(df):
 
     # Cabin
     df["Cabin"] = df["Cabin"].fillna("NoCabin")
+    # It will be dropped after extracting features, like Name
 
     # Embarked
     df["Embarked"] = df["Embarked"].fillna(df["Embarked"].mode()[0]) # fill most frequent value
