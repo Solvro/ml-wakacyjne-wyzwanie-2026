@@ -44,13 +44,15 @@
             python -m ipykernel install --user --name="solvro-ml" --display-name="Python 3 (Solvro Nix)" > /dev/null 2>&1
 
             echo "🐍 Solvro ML Nix environment loaded!"
-            echo "   • Pandas: $(python -c 'import pandas; print(pandas.__version__)')"
-            echo "   • NumPy: $(python -c 'import numpy; print(numpy.__version__)')"
-            echo "   • MatPlotLib: $(python -c 'import matplotlib; print(matplotlib.__version__)')"
-            echo "   • Seaborn: $(python -c 'import seaborn; print(seaborn.__version__)')"
-            echo "   • Scikit-learn: $(python -c 'import sklearn; print(sklearn.__version__)')"
-            echo "   • XGBoost: $(python -c 'import xgboost; print(xgboost.__version__)')"
-            echo "   • Jupyter Kernel: Registered as 'solvro-ml'"
+            echo "$(python -c 'import pandas, numpy, matplotlib, seaborn, sklearn, xgboost;
+            print(f"  • Pandas: {pandas.__version__}")
+            print(f"  • NumPy: {numpy.__version__}")
+            print(f"  • MatPlotLib: {matplotlib.__version__}")
+            print(f"  • Seaborn: {seaborn.__version__}")
+            print(f"  • Scikit-learn: {sklearn.__version__}")
+            print(f"  • XGBoost: {xgboost.__version__}")
+            ')"
+            echo "  • Jupyter Kernel: Registered as 'solvro-ml'"
           '';
         };
       });
