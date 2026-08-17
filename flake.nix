@@ -20,6 +20,7 @@
           ipykernel     # Required for Molten/Jupyter integration
           jupyter-core
           scikit-learn
+          xgboost
         ]);
 
         # Common C libraries required by native ML Python extensions
@@ -48,6 +49,7 @@
             echo "   • MatPlotLib: $(python -c 'import matplotlib; print(matplotlib.__version__)')"
             echo "   • Seaborn: $(python -c 'import seaborn; print(seaborn.__version__)')"
             echo "   • Scikit-learn: $(python -c 'import sklearn; print(sklearn.__version__)')"
+            echo "   • XGBoost: $(python -c 'import xgboost; print(xgboost.__version__)')"
             echo "   • Jupyter Kernel: Registered as 'solvro-ml'"
           '';
         };
