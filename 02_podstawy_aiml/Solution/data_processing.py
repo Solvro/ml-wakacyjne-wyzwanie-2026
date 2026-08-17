@@ -9,7 +9,7 @@ def process_data(df):
     
     # Pclass is already ok
 
-    # Name will be dropped, but after extracting the title, which is implementend in the feature engineering
+    # Name will be dropped, but after extracting the title, which is implemented in the feature engineering
 
     # Sex
     df["Sex"] = df["Sex"].map({'male': 0, 'female': 1}) # binary encoding

@@ -17,10 +17,10 @@ def engineer_features(df):
     df['FamilySize'] = df['SibSp'] + df['Parch'] + 1 # +1 to include the passenger themselves
 
     # HasCabin
-    df['HasCabin'] = df['Cabin'].apply(lambda x: 0 if x == "NoCabin" else 1) # 1 if has cabin
+    df["HasCabin"] = (df["Cabin"] != "NoCabin").astype(np.int32)
 
-    # Deck
-    df["Deck"] = df["Cabin"].str[0] # extract the letter standing for the deck
+    # Deck (keep NoCabin explicit to avoid looking like a real deck letter)
+    df["Deck"] = df["Cabin"].str[0].where(df["Cabin"] != "NoCabin", "NoCabin")
     df = pd.get_dummies(data=df, prefix="Deck", columns=["Deck"], dtype=np.int32)
 
     # drop Cabin

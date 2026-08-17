@@ -1,6 +1,6 @@
 from sklearn.metrics import accuracy_score
 import pandas as pd
-from sklearn.model_selection import GridSearchCV, cross_val_score
+from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
 from IPython.display import display
 
