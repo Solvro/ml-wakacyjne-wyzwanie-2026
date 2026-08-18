@@ -22,6 +22,8 @@
           scikit-learn
           xgboost
           optuna
+          plotly
+          nbformat
         ]);
 
         # Common C libraries required by native ML Python extensions
@@ -45,7 +47,7 @@
             python -m ipykernel install --user --name="solvro-ml" --display-name="Python 3 (Solvro Nix)" > /dev/null 2>&1
 
             echo "🐍 Solvro ML Nix environment loaded!"
-            echo "$(python -c 'import pandas, numpy, matplotlib, seaborn, sklearn, xgboost, optuna;
+            echo "$(python -c 'import pandas, numpy, matplotlib, seaborn, sklearn, xgboost, optuna, plotly, nbformat;
             print(f"  • Pandas: {pandas.__version__}")
             print(f"  • NumPy: {numpy.__version__}")
             print(f"  • MatPlotLib: {matplotlib.__version__}")
@@ -53,6 +55,8 @@
             print(f"  • Scikit-learn: {sklearn.__version__}")
             print(f"  • XGBoost: {xgboost.__version__}")
             print(f"  • Optuna: {optuna.__version__}")
+            print(f"  • Plotly: {plotly.__version__}")
+            print(f"  • NbFormat: {nbformat.__version__}")
             ')"
             echo "  • Jupyter Kernel: Registered as 'solvro-ml'"
           '';
