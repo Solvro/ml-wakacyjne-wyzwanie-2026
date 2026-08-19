@@ -169,7 +169,7 @@ Zachowaj **tę samą nazwę pliku** co oryginalny notebook — inaczej upload tw
 
     [![alt text](<data/Zrzut ekranu 2026-07-28 o 00.11.56.png>)](<data/Zrzut ekranu 2026-07-28 o 00.11.56.png>)
 
-3. Uzupełnij opis, upewnij się, że porównywane są właściwe gałęzie, zmiany powinny zostać wprowadzone na `main` (`user-dev` → `main`).
+3. Uzupełnij opis, upewnij się, że porównywane są właściwe gałęzie, zmiany powinny zostać wprowadzone na SWOJEGO `main` (`user-dev` → `user-main`).
 
     [![alt text](<data/Zrzut ekranu 2026-07-28 o 00.13.34 1.png>)](<data/Zrzut ekranu 2026-07-28 o 00.13.34 1.png>)
 
