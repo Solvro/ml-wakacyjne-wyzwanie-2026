@@ -5,9 +5,14 @@ import numpy as np
 
 def plot_hyperparameter_tuning_results(cv_results):
     results = pd.DataFrame(cv_results)
+    prefix = "model__" if "param_model__max_depth" in results else ""
+    depth_column = f"param_{prefix}max_depth"
+    estimators = f"param_{prefix}n_estimators"
+    child_weight = f"param_{prefix}min_child_weight"
+    learning_rate = f"param_{prefix}learning_rate"
 
-    max_depths = sorted(results["param_max_depth"].unique())
-    n_estimators_list = sorted(results["param_n_estimators"].unique())
+    max_depths = sorted(results[depth_column].unique())
+    n_estimators_list = sorted(results[estimators].unique())
 
     fig, axes = plt.subplots(
         len(n_estimators_list), 
@@ -29,8 +34,8 @@ def plot_hyperparameter_tuning_results(cv_results):
             ax = axes[i, j]
             
             data = results[
-                (results["param_max_depth"] == depth) & 
-                (results["param_n_estimators"] == n_est)
+                (results[depth_column] == depth) &
+                (results[estimators] == n_est)
             ]
             
             if data.empty:
@@ -38,8 +43,8 @@ def plot_hyperparameter_tuning_results(cv_results):
                 continue
 
             heatmap_data = data.pivot(
-                index="param_min_child_weight",
-                columns="param_learning_rate",
+                index=child_weight,
+                columns=learning_rate,
                 values="mean_test_score",
             )
 

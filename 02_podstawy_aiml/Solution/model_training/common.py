@@ -1,8 +1,10 @@
-from sklearn.metrics import accuracy_score
 import pandas as pd
-from sklearn.model_selection import GridSearchCV
-from xgboost import XGBClassifier
+from sklearn.model_selection import GridSearchCV, cross_validate
 from IPython.display import display
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+SCORING = {"accuracy": "accuracy", "precision": "precision", "recall": "recall", "f1": "f1"}
 
 def run_hyperparameter_tuning(model, param_grid, X_train, y_train, folds):
     grid_search = GridSearchCV(
@@ -10,7 +12,7 @@ def run_hyperparameter_tuning(model, param_grid, X_train, y_train, folds):
         param_grid,
         cv=folds,
         scoring="accuracy",
-        n_jobs=-1
+        n_jobs=1
     )
     grid_search.fit(X_train, y_train)
     
@@ -21,44 +23,23 @@ def run_hyperparameter_tuning(model, param_grid, X_train, y_train, folds):
         grid_search.cv_results_
     )
 
+def evaluate_model(model, X_train, y_train, folds):
+    scores = cross_validate(model, X_train, y_train, cv=folds, scoring=SCORING, n_jobs=1)
+    return pd.DataFrame({metric: scores[f"test_{metric}"] for metric in SCORING})
+
 def print_evaluation_results(scores):
-    print(f"Mean accuracy: {sum(scores) / len(scores):.4f}")
-    print(f"Standard deviation: {pd.Series(scores).std():.4f}")
+    summary = scores.agg(["mean", "std"]).T
+    summary = summary.rename(columns={"mean": "CV mean", "std": "CV std"}).round(3)
 
-def test_model(model, X_test, y_test):
-    predictions = model.predict(X_test)
-    return accuracy_score(y_test, predictions)
+    display(summary)
 
-def compare_candidates(candidates, X_train, y_train, X_test, y_test):
-    results = []
-
-    for item in candidates:
-        params = item.copy()
-        name = params.pop("Candidate")
-
-        model = XGBClassifier(
-            **params,
-            random_state=67,
-            objective="binary:logistic",
-            tree_method="hist",
-            eval_metric="logloss",
-            n_jobs=-1
-        )
-
-        model.fit(X_train, y_train)
-
-        train_acc = model.score(X_train, y_train)
-        test_acc = model.score(X_test, y_test)
-
-        results.append(
-            {
-                "Candidate": name,
-                **params,
-                "Train Score": round(train_acc, 4),
-                "Test Score": round(test_acc, 4),
-                "Gap (Train - Test)": round(train_acc - test_acc, 4),
-            }
-        )
-
-    df_comparison = pd.DataFrame(results)
-    display(df_comparison.sort_values(by="Test Score", ascending=False))
+    plt.figure(figsize=(6, 4))
+    sns.heatmap(
+        summary,
+        annot=True,
+        fmt=".3f",
+        cmap="Blues"
+    )
+    plt.title("Cross-validation results")
+    plt.tight_layout()
+    plt.show()
