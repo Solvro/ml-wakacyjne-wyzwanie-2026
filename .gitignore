@@ -1,0 +1,20 @@
+# Datasets
+data_voc/
+*.tar
+*.tar.gz
+*.zip
+
+# Python & Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# PyTorch models & weights
+*.pth
+*.pt
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
