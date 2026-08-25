@@ -2,7 +2,7 @@
   description = "Python Environment for Solvro's Machine Learning Summer Course";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/0e251e24a4f24e036a084b6b4b2d2491af4167f4";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
