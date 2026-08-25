@@ -24,6 +24,8 @@
           optuna
           plotly
           nbformat
+          pytorch3d
+          torchvision
         ]);
 
         # Common C libraries required by native ML Python extensions
