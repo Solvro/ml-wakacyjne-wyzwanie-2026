@@ -27,6 +27,8 @@
           pytorch3d
           torchvision
           python-dotenv
+          langchain-community
+          pymupdf
         ]);
 
         # Common C libraries required by native ML Python extensions
