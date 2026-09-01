@@ -29,6 +29,8 @@
           python-dotenv
           langchain-community
           pymupdf
+          langchain-huggingface
+          langchain-chroma
         ]);
 
         # Common C libraries required by native ML Python extensions
