@@ -1,6 +1,6 @@
 #INFO O AGENCIE ORAZ WNIOSKI/SUGESTIE/MYŚLI
 
-1. Jak coś, to w .zip'ie wrzuciłam pliki pdf których użyłam w vectorowej db.
+1. Jak coś, to tu jest link do ZIP-a(gh nie chce ładować plik większy niż 25 mb) https://drive.google.com/file/d/1z97EMreXPgs0OGexi33SNr9uyKj5HrTr/view?usp=sharing
 2. Ładujcie do notebook-a tyko bazę wektorową, nie ma potrzeby się męczyć z rozpakowywaniem zipa
 
 Teraz trochę myśli:
