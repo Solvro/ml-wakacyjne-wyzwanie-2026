@@ -5,6 +5,7 @@ from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
+from langchain_core.tools import tool
 
 
 pdf_paths = [
@@ -21,8 +22,8 @@ def load_pdf(pdf_path):
 
 def chunk_pdfs(loaded_pdfs):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=300,
-        chunk_overlap=100,
+        chunk_size=200,
+        chunk_overlap=50,
         length_function=len,
         separators=["\n\n", "\n", " ", ""]
     )
@@ -37,6 +38,37 @@ def create_vector_base(docs):
         # persist_directory="/content/drive/MyDrive/Colab Notebooks/ZadanieAgenty/"
         )
     return vectorstore
+
+def find(vector_base, subject):
+    retriever = vector_base.as_retriever(
+        search_kwargs={"k": 10}
+        )
+
+    similar = retriever.invoke(subject)
+    for doc in similar:
+      print(doc.page_content[:300] + "...\n---")
+
+@tool
+def search_knowledge_base(vector_base, query:str) -> str:
+    """Searches the knowledge base for information from the loaded PDF documents.
+    Use this tool when the user asks about the content of the documents.
+    """
+    print("DEBUG: search_knowledge_base used")
+
+    retriever = vector_base.as_retriever(
+        search_kwargs={"k": 10}
+        )
+
+    docs = retriever.invoke(query)
+
+    if not docs:
+        return "No matching information in the knowledge base."
+
+    # Wyciągamy samą treść z każdego obiektu w docs i łączymy w jeden tekst
+    return "\n\n---\n\n".join([doc.page_content for doc in docs])
+
+
+tools = [search_knowledge_base]
 
 
 
