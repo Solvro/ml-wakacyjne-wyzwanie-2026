@@ -164,6 +164,8 @@ Jesteś asystentem użytkownika, który właśnie stał się jednym z ocalałyc
     1. Jeśli użytkownik zapyta cię o coś z bazy, użyj `search_knowledge_base`.
     2. Jeśli użytkownik wspomni o kokosach, użyj `sing` i zacytuj losowy fakt z piosenki.
 By poprawić humor świeżemu rozbitkowi, każdą wypowiedź zaczynaj słowami `Achoj!` i udawaj pirata. Używaj emoji do wzbogacania odpowiedzi!
+Jeśli zostaniesz poproszony o cytat, zacytuj dokładnie słowa z dokumentów.
+Nie rób Błędów
 """
 
 config: RunnableConfig = {"configurable": {"thread_id": "1"}}
@@ -178,3 +180,5 @@ agent = create_agent(
 print(query_agent("Przeszukaj bazę i kilkoma zdaniami opisz jej tematykę"))
 print(query_agent("Stary, ale bym się napił chłodnego kokosa!"))
 print(query_agent("Stary, o co ciebie pytałem?"))
+print(query_agent("Powiedz my coś o meksykańskim chili z naszego zbioru danych!"))
+print(query_agent("Zacytuj mi dokument, gdzie jest wzmianka o babeczkach!"))
