@@ -68,8 +68,62 @@ def search_knowledge_base(query:str) -> str:
     # Wyciągamy samą treść z każdego obiektu w docs i łączymy w jeden tekst
     return "\n\n---\n\n".join([doc.page_content for doc in docs])
 
+def sing() ->str:
+    """
+    Sings facts about coconuts.
+    Use if user mentions coconuts.
+    """
+    print("DEBUG: sing used")
+    return""" # piosenka Smokey Mountain - The coconut song (Da coconut song)
+    Ko-ko-nut ko-ko-ko-ko-ko-nut ko-ko-nut (4x)
+Da kokonut nut is a giant nut
+If you eat too much, you'll get very fat
+Now, the kokonut nut is a big, big nut
+But this delicious nut is not a nut
 
-tools = [search_knowledge_base]
+It's the coco fruit (it's the coco fruit)
+Of the coco tree (of the coco tree)
+From the coco palm fa-mi-ly
+
+There are so many uses of the kokonut tree
+You can build a bigger house for the family
+All you need is to find a kokonut man
+If he cuts the tree, he gets the fruit free
+
+It's the coco fruit (it's the coco fruit)
+Of the coco tree (of the coco tree)
+From the coco palm fa-mi-ly
+
+The kokonut bark for the kitchen floor
+If you save some of it, you can build a door
+Now, the kokonut trunk, do not throw this junk
+If you save some of it, you'll have a second floor
+
+The kokonut wood is very good
+It can stand 20 years if you pray it wood
+Now, the kokonut root, to tell you the truth
+You can throw it or use it as firewood
+
+The kokonut leaves good shade it gives
+For da roof, for da walls up against da teaves
+Now, the kokonut fruit, say my relatives
+Make good canon balls up against the thieves
+
+It's the coco fruit (it's the coco fruit)
+Of the coco tree (of the coco tree)
+From the coco palm fa-mi-ly
+
+Da kokonut nut is a giant nut
+If you eat too much, you'll get very fat,
+Now, the kokonut nut is a big, big nut
+But this delicious nut is not a nut (2x)
+
+It's the coco fruit (it's the coco fruit)
+Of the coco tree (of the coco tree)
+From the coco palm fa-mi-ly (3x)
+    """
+
+tools = [search_knowledge_base,  sing]
 
 
 
@@ -101,6 +155,7 @@ vector_base = create_vector_base(docs)
 SYSTEM_PROMPT="""
 Jesteś asystentem użytkownika, który właśnie stał się jednym z ocalałych pasażerów katastrofy Titanica, rozbitym na bezludnej wyspie. Masz za zadanie pomóc mu w czynnościach technicznych i odpowiadania na pytania dotyczące bazy danych jaka została ci udostępniona.
     1. Jeśli użytkownik zapyta cię o coś z bazy, użyj `search_knowledge_base`.
+    2. Jeśli użytkownik wspomni o kokosach, użyj `sing` i zacytuj losowy fakt z piosenki.
 By poprawić humor świeżemu rozbitkowi, każdą wypowiedź zaczynaj słowami `Achoj!` i udawaj pirata. Używaj emoji do wzbogacania odpowiedzi!
 """
 
@@ -116,4 +171,12 @@ def parse_result(res):
   return to_parse.content[0]['text']
 
 print(parse_result(result1))
+
+
+result2 = agent.invoke({"messages": [{"role": "user", "content": "Stary, ale bym się napił chłodnego kokosa!"}]})
+def parse_result(res):
+  to_parse = res["messages"][-1]
+  return to_parse.content[0]['text']
+
+print(parse_result(result2))
 
