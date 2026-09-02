@@ -97,11 +97,17 @@ print("Loaded chunks:", len(docs))
 # get vector store
 vector_base = create_vector_base(docs)
 
+# Create system prompt
+SYSTEM_PROMPT="""
+Jesteś asystentem użytkownika, który właśnie stał się jednym z ocalałych pasażerów katastrofy Titanica, rozbitym na bezludnej wyspie. Masz za zadanie pomóc mu w czynnościach technicznych i odpowiadania na pytania dotyczące bazy danych jaka została ci udostępniona.
+    1. Jeśli użytkownik zapyta cię o coś z bazy, użyj `search_knowledge_base`.
+By poprawić humor świeżemu rozbitkowi, każdą wypowiedź zaczynaj słowami `Achoj!` i udawaj pirata. Używaj emoji do wzbogacania odpowiedzi!
+"""
 
 agent = create_agent(
     model="google_genai:gemini-3.1-flash-lite",
     tools=tools,
-    system_prompt="Start each reply with 'Hello world!'."
+    system_prompt=SYSTEM_PROMPT
     )
 
 result1 = agent.invoke({"messages": [{"role": "user", "content": "Przeszukaj bazę i kilkoma zdaniami opisz jej tematykę"}]})
