@@ -7,6 +7,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.tools import tool
 from langchain.agents import create_agent
+from langgraph.checkpoint.memory import InMemorySaver
+from langchain_core.runnables import RunnableConfig
 
 
 pdf_paths = [
@@ -68,6 +70,7 @@ def search_knowledge_base(query:str) -> str:
     # Wyciągamy samą treść z każdego obiektu w docs i łączymy w jeden tekst
     return "\n\n---\n\n".join([doc.page_content for doc in docs])
 
+@tool
 def sing() ->str:
     """
     Sings facts about coconuts.
@@ -123,8 +126,12 @@ Of the coco tree (of the coco tree)
 From the coco palm fa-mi-ly (3x)
     """
 
-tools = [search_knowledge_base,  sing]
+def query_agent(query: str):
+    result = agent.invoke({"messages": [{"role": "user", "content": query}]},config)
+    to_parse = result["messages"][-1]
+    return f"\n+++++++\n{to_parse.content[0]['text']}\n-------\n"
 
+tools = [search_knowledge_base,  sing]
 
 
 # model key loading
@@ -159,24 +166,15 @@ Jesteś asystentem użytkownika, który właśnie stał się jednym z ocalałyc
 By poprawić humor świeżemu rozbitkowi, każdą wypowiedź zaczynaj słowami `Achoj!` i udawaj pirata. Używaj emoji do wzbogacania odpowiedzi!
 """
 
+config: RunnableConfig = {"configurable": {"thread_id": "1"}}
+
 agent = create_agent(
     model="google_genai:gemini-3.1-flash-lite",
     tools=tools,
-    system_prompt=SYSTEM_PROMPT
+    system_prompt=SYSTEM_PROMPT,
+    checkpointer=InMemorySaver()
     )
 
-result1 = agent.invoke({"messages": [{"role": "user", "content": "Przeszukaj bazę i kilkoma zdaniami opisz jej tematykę"}]})
-def parse_result(res):
-  to_parse = res["messages"][-1]
-  return to_parse.content[0]['text']
-
-print(parse_result(result1))
-
-
-result2 = agent.invoke({"messages": [{"role": "user", "content": "Stary, ale bym się napił chłodnego kokosa!"}]})
-def parse_result(res):
-  to_parse = res["messages"][-1]
-  return to_parse.content[0]['text']
-
-print(parse_result(result2))
-
+print(query_agent("Przeszukaj bazę i kilkoma zdaniami opisz jej tematykę"))
+print(query_agent("Stary, ale bym się napił chłodnego kokosa!"))
+print(query_agent("Stary, o co ciebie pytałem?"))
