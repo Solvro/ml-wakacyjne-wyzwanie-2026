@@ -6,6 +6,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.tools import tool
+from langchain.agents import create_agent
 
 
 pdf_paths = [
@@ -49,7 +50,7 @@ def find(vector_base, subject):
       print(doc.page_content[:300] + "...\n---")
 
 @tool
-def search_knowledge_base(vector_base, query:str) -> str:
+def search_knowledge_base(query:str) -> str:
     """Searches the knowledge base for information from the loaded PDF documents.
     Use this tool when the user asks about the content of the documents.
     """
@@ -95,3 +96,18 @@ print("Loaded chunks:", len(docs))
 
 # get vector store
 vector_base = create_vector_base(docs)
+
+
+agent = create_agent(
+    model="google_genai:gemini-3.1-flash-lite",
+    tools=tools,
+    system_prompt="Start each reply with 'Hello world!'."
+    )
+
+result1 = agent.invoke({"messages": [{"role": "user", "content": "Przeszukaj bazę i kilkoma zdaniami opisz jej tematykę"}]})
+def parse_result(res):
+  to_parse = res["messages"][-1]
+  return to_parse.content[0]['text']
+
+print(parse_result(result1))
+

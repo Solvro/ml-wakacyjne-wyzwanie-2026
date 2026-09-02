@@ -31,6 +31,8 @@
           pymupdf
           langchain-huggingface
           langchain-chroma
+          langchain
+          langchain-google-genai
         ]);
 
         # Common C libraries required by native ML Python extensions
