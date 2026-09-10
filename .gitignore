@@ -1,0 +1,10 @@
+.venv
+__pycache__/
+
+03_sieci_neuronowe_wizja_komputerowa/data_voc/
+
+.env*
+!.env.example
+
+04_nlp_agenty/data/
+04_nlp_agenty/chroma_db/
