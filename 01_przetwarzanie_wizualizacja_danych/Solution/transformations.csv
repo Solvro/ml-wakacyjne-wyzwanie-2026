@@ -1,0 +1,18 @@
+Column,Decision,Imputation,Encoding,Scaling,Reason
+PassengerId,Drop,None,None,None,No meaning
+Survived,Target,None,None,None,Target variable
+Pclass,Keep,None,None,None,Strong relationship with survival
+Name,Drop,None,None,None,"Extract Title"
+Sex,Keep,None,Binary,None,Strong relationship with survival
+Age,Impute,Median by Pclass and Sex,None,None,Strong relationship with survival
+SibSp,Keep,None,None,None,"Shows relationship with survival, used to create FamilySize"
+Parch,Keep,None,None,None,Shows relationship with survival; also used to create FamilySize
+Ticket,Drop,None,None,None,Potentially useful information but outside the scope of this analysis
+Fare,Impute,Median by Pclass and Sex,None,Log-transform,Strong relationship with survival
+Cabin,Drop,Missing -> NoCabin,None,None,"Extract HasCabin and Deck"
+Embarked,Impute,Most frequent category,One-hot,None,Shows a relationship with survival and may provide additional information to the model
+----------,,,,,
+Title,Create,None,One-hot,None,"Shows relationship with survival, extracted from Name, replaced rare titles with 'Rare'"
+FamilySize,Create,None,Numeric,None,"Shows relationship with survival, created from SibSp and Parch"
+HasCabin,Create,None,Binary,None,"Shows relationship with survival, created from Cabin"
+Deck,Create,None,One-hot,None,"Shows relationship with survival, extracted from Cabin"
